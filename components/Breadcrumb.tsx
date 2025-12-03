@@ -12,7 +12,7 @@ interface BreadcrumbProps {
 export function Breadcrumb({ items }: BreadcrumbProps) {
   return (
     <nav className="mb-6 sm:mb-8" aria-label="Breadcrumb">
-      <ol className="flex items-center gap-2 text-sm font-poppins">
+      <ol className="flex items-center gap-2 text-sm font-poppins flex-wrap">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
           
@@ -34,7 +34,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
                 </svg>
               )}
               {isLast ? (
-                <span className="text-white font-medium">{item.label}</span>
+                <span className="text-white font-medium truncate max-w-xs sm:max-w-md md:max-w-lg">{item.label}</span>
               ) : item.href ? (
                 <Link
                   href={item.href}

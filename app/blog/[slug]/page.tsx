@@ -57,7 +57,7 @@ function MarkdownContent({ content }: { content: string }) {
       const text = currentParagraph.join(" ");
       if (text.trim()) {
         elements.push(
-          <p key={elements.length} className="text-gray-300 mb-4 leading-relaxed font-poppins">
+          <p key={elements.length} className="text-sm sm:text-base text-gray-300 mb-3 sm:mb-4 leading-relaxed font-poppins">
             {parseInlineMarkdown(text)}
           </p>
         );
@@ -74,7 +74,7 @@ function MarkdownContent({ content }: { content: string }) {
           key={elements.length}
           className={`${
             listType === "ul" ? "list-disc" : "list-decimal"
-          } list-inside mb-4 space-y-2 text-gray-300 font-poppins ml-4`}
+          } list-inside mb-3 sm:mb-4 space-y-1 sm:space-y-2 text-sm sm:text-base text-gray-300 font-poppins ml-2 sm:ml-4`}
         >
           {listItems.map((item, idx) => (
             <li key={idx} className="mb-2">
@@ -98,7 +98,7 @@ function MarkdownContent({ content }: { content: string }) {
       elements.push(
         <h1
           key={elements.length}
-          className="text-3xl font-semibold text-white mt-8 mb-4 font-poppins"
+          className="text-2xl sm:text-3xl font-semibold text-white mt-6 sm:mt-8 mb-3 sm:mb-4 font-poppins"
         >
           {trimmed.substring(2)}
         </h1>
@@ -109,7 +109,7 @@ function MarkdownContent({ content }: { content: string }) {
       elements.push(
         <h2
           key={elements.length}
-          className="text-2xl font-semibold text-white mt-8 mb-4 font-poppins"
+          className="text-xl sm:text-2xl font-semibold text-white mt-6 sm:mt-8 mb-3 sm:mb-4 font-poppins"
         >
           {trimmed.substring(3)}
         </h2>
@@ -120,7 +120,7 @@ function MarkdownContent({ content }: { content: string }) {
       elements.push(
         <h3
           key={elements.length}
-          className="text-xl font-semibold text-white mt-6 mb-3 font-poppins"
+          className="text-lg sm:text-xl font-semibold text-white mt-4 sm:mt-6 mb-2 sm:mb-3 font-poppins"
         >
           {trimmed.substring(4)}
         </h3>
@@ -219,9 +219,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           }}
         ></div>
 
-        <div className="container max-w-7xl mx-auto relative z-10 py-12 sm:py-16">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
           {/* En-tête de l'article */}
-          <article className="bg-gray-950/50 rounded-2xl p-6 sm:p-8 lg:p-12 max-w-5xl">
+          <article className="bg-gray-950/50 rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 max-w-5xl mx-auto">
             {/* Breadcrumb */}
             <Breadcrumb
               items={[

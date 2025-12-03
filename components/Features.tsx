@@ -42,7 +42,10 @@ export function Features() {
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4 sm:mb-6 leading-tight tracking-[-1.5px] sm:tracking-[-2px] font-poppins max-w-3xl mx-auto">
-          Trouve des missions à proximité,<br />de manière <span style={{ color: "#2563eb", textDecoration: "underline" }}>spontanée</span>
+          Trouve des missions à proximité,<br /> <span style={{ color: "#2563eb" }}>de manière <span className="relative inline-block">
+                  <span className="relative z-10">spontanée</span>
+                  <span className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-full opacity-60" style={{ transform: 'translateY(2px)' }}></span>
+                </span></span>
           </h2>
 
         </div>
