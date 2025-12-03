@@ -124,7 +124,7 @@ export function Hero() {
               Application bientôt disponible
             </h2>
             <p className="text-sm sm:text-base text-gray-300 mb-6 leading-relaxed font-poppins">
-              L&apos;application mobile Servido sera bientôt disponible sur l&apos;App Store et Google Play. Restez connecté pour être informé de son lancement !
+              L&apos;application mobile Servido sera bientôt disponible sur l&apos;App Store et Google Play. Reste connecté pour être informé de son lancement !
             </p>
             <button
               onClick={() => setShowModal(false)}

@@ -10,7 +10,7 @@ import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = generateSEOMetadata({
   title: "Accueil",
-  description: "Bienvenue sur Servido, votre plateforme de services moderne et innovante. Découvrez nos solutions adaptées à vos besoins.",
+  description: "Bienvenue sur Servido, ta plateforme de services moderne et innovante. Découvre nos solutions adaptées à tes besoins.",
   keywords: ["servido", "services", "plateforme", "accueil", "solutions"],
   url: "/",
 });
@@ -46,14 +46,13 @@ export default function Home() {
       <JsonLd data={websiteSchema} />
       <Navbar />
       <div className="bg-black pt-16 sm:pt-20 relative">
-        {/* Texture en background - commentée
+        {/* Texture en background */}
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0)`,
-          backgroundSize: '25px 25px',
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.13) 1px, transparent 0)`,
+          backgroundSize: '35px 35px',
           maskImage: 'radial-gradient(ellipse at center, black 0%, black 20%, transparent 100%)',
           WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, black 30%, transparent 100%)'
         }}></div>
-        */}
         <div className="relative z-10">
           <Hero />
         </div>

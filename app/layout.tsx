@@ -21,10 +21,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Servido - Votre plateforme de services",
+    default: "Servido - Ta plateforme de services",
     template: "%s | Servido",
   },
-  description: "Découvrez Servido, votre plateforme de services moderne et innovante.",
+  description: "Découvre Servido, ta plateforme de services moderne et innovante.",
   keywords: ["servido", "services", "plateforme", "application"],
   authors: [{ name: "Servido Team" }],
   creator: "Servido",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Servido",
     title: "Servido - Votre plateforme de services",
-    description: "Découvrez Servido, votre plateforme de services moderne et innovante.",
+    description: "Découvre Servido, ta plateforme de services moderne et innovante.",
     images: [
       {
         url: "/og-image.jpg",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Servido - Votre plateforme de services",
-    description: "Découvrez Servido, votre plateforme de services moderne et innovante.",
+    description: "Découvre Servido, ta plateforme de services moderne et innovante.",
     images: ["/og-image.jpg"],
     creator: "@servido",
   },

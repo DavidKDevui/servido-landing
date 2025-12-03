@@ -50,6 +50,12 @@ export function Navbar() {
             >
               FAQ
             </a>
+            <Link
+              href="/blog"
+              className="text-sm sm:text-base text-white hover:text-blue-400 transition-colors duration-200 font-poppins cursor-pointer"
+            >
+              Blog
+            </Link>
           </div>
         </div>
       </div>

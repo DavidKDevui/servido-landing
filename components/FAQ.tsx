@@ -10,27 +10,23 @@ interface FAQItem {
 const faqData: FAQItem[] = [
   {
     question: "Comment fonctionne Servido ?",
-    answer: "Servido est une plateforme qui connecte les commerces locaux avec des freelances pour des missions de courte durée. Les commerces publient leurs besoins, et les freelances peuvent accepter les missions qui leur conviennent directement depuis l'application mobile."
+    answer: "Servido est une plateforme qui connecte les freelances avec des commerces pour des missions de courte durée (de 1h à 8h). Les commerces proposent directement des missions aux freelances à proximité, qui eux peuvent les accepter ou non."
   },
   {
     question: "Quels types de missions sont disponibles ?",
-    answer: "Les missions disponibles sur Servido sont variées et adaptées aux besoins des commerces : livraisons, service client, assistance événementielle, et bien d'autres missions de courte durée qui nécessitent une intervention rapide."
+    answer: "Les missions disponibles sur Servido s'adressent principalement aux métiers de la restauration et de l'hôtellerie : plongeur, serveur, barman, cuisinier, hôte d'accueil, et bien d'autres missions de courte durée qui nécessitent une intervention rapide dans ces secteurs."
   },
   {
     question: "Comment puis-je commencer à utiliser Servido ?",
-    answer: "C'est simple ! Téléchargez l'application mobile Servido sur iOS ou Android, créez votre compte en quelques minutes, et commencez soit à publier des missions si vous êtes un commerce, soit à accepter des missions si vous êtes freelance."
+    answer: "C'est simple ! Télécharge l'application mobile Servido sur iOS ou Android, crée ton compte en quelques minutes, et commence soit à publier des missions si tu es un commerce, soit à accepter des missions si tu es freelance."
   },
   {
-    question: "Les paiements sont-ils sécurisés ?",
-    answer: "Oui, tous les paiements sur Servido sont sécurisés et traités de manière transparente. Les freelances reçoivent leur rémunération rapidement après la validation de la mission."
-  },
-  {
-    question: "Y a-t-il des frais d'utilisation ?",
-    answer: "Servido propose des tarifs transparents et compétitifs. Les frais varient selon le type de mission et sont clairement indiqués avant la confirmation. Consultez l'application pour plus de détails sur nos tarifs."
+    question: "Puis-je choisir mes horaires de travail ?",
+    answer: "Oui, c'est l'un des avantages de Servido ! En tant que freelance, tu es libre d'accepter ou de refuser les missions qui te sont proposées selon tes disponibilités. Tu choisis quand tu veux travailler et tu peux adapter ton planning selon tes besoins."
   },
   {
     question: "Puis-je utiliser Servido en tant que commerce et freelance ?",
-    answer: "Absolument ! Vous pouvez utiliser Servido à la fois pour publier des missions pour votre commerce et pour accepter des missions en tant que freelance. Un seul compte vous permet d'accéder aux deux fonctionnalités."
+    answer: "Absolument ! Tu peux utiliser Servido à la fois pour publier des missions pour ton commerce et pour accepter des missions en tant que freelance."
   }
 ];
 
@@ -52,7 +48,7 @@ export function FAQ() {
             </span>
           </h2>
           <p className="text-base sm:text-lg text-gray-300 max-w-xl mx-auto font-poppins">
-            Trouvez les réponses aux questions les plus courantes sur Servido
+            Trouve les réponses aux questions les plus courantes sur Servido
           </p>
         </div>
 
