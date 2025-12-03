@@ -108,7 +108,7 @@ La pénurie de personnel dans la restauration n'est pas un phénomène nouveau, 
 
 Servido a été créé pour répondre précisément à ces problèmes structurels. La plateforme permet aux restaurateurs de :
 
-**Trouver du personnel rapidement** : en cas d'urgence (absence, pic d'activité), un restaurateur peut publier une mission et trouver un professionnel disponible en quelques heures.
+**Trouver du personnel rapidement** : en cas d'urgence (absence, pic d'activité), un restaurateur peut proposer directement à des freelances et trouver un professionnel disponible en quelques heures.
 
 **Faire appel à des professionnels expérimentés** : les freelances sur Servido ont déjà de l'expérience dans la restauration. Pas besoin de formation intensive, ils sont opérationnels immédiatement.
 
@@ -237,7 +237,7 @@ Ces situations sont le quotidien des restaurateurs. Le secteur de la restauratio
 
 Servido a été conçu pour répondre précisément à ces problèmes :
 
-**Rapidité** : un restaurateur peut publier une mission et trouver un professionnel disponible en quelques heures, parfois même en quelques minutes. Pas besoin d'attendre plusieurs jours.
+**Rapidité** : un restaurateur peut proposer directement à des freelances et trouver un professionnel disponible en quelques heures, parfois même en quelques minutes. Pas besoin d'attendre plusieurs jours.
 
 **Spécialisation** : Servido est dédié à la restauration et à l'hôtellerie. Les freelances sur la plateforme ont de l'expérience dans ces secteurs. Pas besoin d'expliquer les bases à quelqu'un qui n'a jamais travaillé en restauration.
 
@@ -249,7 +249,7 @@ Servido a été conçu pour répondre précisément à ces problèmes :
 
 ## Comment Servido fonctionne concrètement
 
-**Pour les restaurateurs** : vous créez un compte, vous publiez une mission (type de poste, horaires, rémunération), et les freelances à proximité peuvent l'accepter. Vous choisissez celui qui vous convient, et vous communiquez directement avec lui.
+**Pour les restaurateurs** : vous créez un compte, vous proposez directement à des freelances (type de poste, horaires, rémunération), et les freelances à proximité peuvent accepter. Vous choisissez celui qui vous convient, et vous communiquez directement avec lui.
 
 **Pour les freelances** : vous créez un profil avec votre expérience et vos compétences, vous recevez des notifications pour les missions à proximité, et vous acceptez celles qui vous intéressent. Vous travaillez, vous êtes payé rapidement.
 

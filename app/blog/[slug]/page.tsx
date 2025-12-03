@@ -219,18 +219,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           }}
         ></div>
 
-        <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
-          {/* Breadcrumb */}
-          <Breadcrumb
-            items={[
-              { label: "Accueil", href: "/" },
-              { label: "Blog", href: "/blog" },
-              { label: post.title.length > 50 ? post.title.substring(0, 50) + "..." : post.title },
-            ]}
-          />
-
+        <div className="container max-w-7xl mx-auto relative z-10 py-12 sm:py-16">
           {/* En-tête de l'article */}
-          <article className="bg-gray-950/50 border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-12">
+          <article className="bg-gray-950/50 rounded-2xl p-6 sm:p-8 lg:p-12 max-w-5xl">
+            {/* Breadcrumb */}
+            <Breadcrumb
+              items={[
+                { label: "Accueil", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: post.title.length > 50 ? post.title.substring(0, 50) + "..." : post.title },
+              ]}
+            />
+            
             {/* Catégorie et date */}
             <div className="flex items-center gap-3 mb-6">
               <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs sm:text-sm font-medium rounded-full font-poppins">

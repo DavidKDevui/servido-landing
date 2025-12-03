@@ -28,7 +28,7 @@ export function generateSEOMetadata({
   const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
 
   const metadata: Metadata = {
-    title: title ? `${title} | Servido` : 'Servido - Votre plateforme de services',
+    title: title || 'Servido - Ta plateforme de services',
     description: description || 'Découvrez Servido, votre plateforme de services moderne et innovante.',
     keywords: keywords.length > 0 ? keywords : ['servido', 'services', 'plateforme'],
     alternates: {
@@ -37,7 +37,7 @@ export function generateSEOMetadata({
     openGraph: {
       type: type || 'website',
       url: fullUrl,
-      title: title || 'Servido - Votre plateforme de services',
+      title: title ? `${title} | Servido` : 'Servido - Ta plateforme de services',
       description: description || 'Découvrez Servido, votre plateforme de services moderne et innovante.',
       siteName: 'Servido',
       images: [
@@ -54,7 +54,7 @@ export function generateSEOMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: title || 'Servido - Votre plateforme de services',
+      title: title ? `${title} | Servido` : 'Servido - Ta plateforme de services',
       description: description || 'Découvrez Servido, votre plateforme de services moderne et innovante.',
       images: [imageUrl],
     },
