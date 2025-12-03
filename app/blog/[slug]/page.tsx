@@ -2,14 +2,16 @@ import { generateSEOMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import Link from "next/link";
 import { getBlogPostBySlug, getAllBlogPosts } from "@/lib/blogData";
 import { notFound } from "next/navigation";
+import React from "react";
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -22,7 +24,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return {
@@ -43,7 +46,7 @@ export async function generateMetadata({
 
 function MarkdownContent({ content }: { content: string }) {
   const lines = content.split("\n");
-  const elements: JSX.Element[] = [];
+  const elements: Array<React.ReactNode> = [];
   let currentParagraph: string[] = [];
   let inList = false;
   let listItems: string[] = [];
@@ -154,7 +157,7 @@ function MarkdownContent({ content }: { content: string }) {
 }
 
 function parseInlineMarkdown(text: string): React.ReactNode {
-  const parts: (string | JSX.Element)[] = [];
+  const parts: (string | React.ReactElement)[] = [];
   let current = "";
   let i = 0;
 
@@ -191,8 +194,9 @@ function parseInlineMarkdown(text: string): React.ReactNode {
   );
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -216,26 +220,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         ></div>
 
         <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
-          {/* Bouton retour */}
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-200 mb-8 font-poppins"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Retour au blog
-          </Link>
+          {/* Breadcrumb */}
+          <Breadcrumb
+            items={[
+              { label: "Accueil", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: post.title.length > 50 ? post.title.substring(0, 50) + "..." : post.title },
+            ]}
+          />
 
           {/* En-tête de l'article */}
           <article className="bg-gray-950/50 border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-12">
@@ -276,29 +268,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </div>
           </article>
-
-          {/* Bouton retour en bas */}
-          <div className="mt-8 text-center">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500/20 text-blue-400 rounded-full hover:bg-blue-500/30 transition-colors duration-200 font-poppins"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Retour au blog
-            </Link>
-          </div>
         </div>
       </div>
       <Footer />

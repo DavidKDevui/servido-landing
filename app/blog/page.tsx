@@ -2,6 +2,7 @@ import { generateSEOMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import Link from "next/link";
 import { getAllBlogPosts } from "@/lib/blogData";
 
@@ -28,6 +29,9 @@ export default function BlogPage() {
         }}></div>
         
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
+          {/* Breadcrumb */}
+          <Breadcrumb items={[{ label: "Accueil", href: "/" }, { label: "Blog" }]} />
+          
           {/* En-tête */}
           <div className="text-center mb-12 sm:mb-16">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6 leading-tight tracking-[-1.5px] sm:tracking-[-2px] font-poppins">
