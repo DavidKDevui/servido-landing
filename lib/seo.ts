@@ -6,7 +6,7 @@ interface SEOProps {
   keywords?: string[]
   image?: string
   url?: string
-  type?: 'website' | 'article' | 'product'
+  type?: 'website' | 'article'
   publishedTime?: string
   modifiedTime?: string
   author?: string
@@ -35,7 +35,7 @@ export function generateSEOMetadata({
       canonical: fullUrl,
     },
     openGraph: {
-      type,
+      type: type || 'website',
       url: fullUrl,
       title: title || 'Servido - Votre plateforme de services',
       description: description || 'Découvrez Servido, votre plateforme de services moderne et innovante.',
