@@ -189,9 +189,9 @@ function ResetPasswordContent() {
           backgroundSize: '25px 25px',
           maskImage: 'radial-gradient(ellipse at center, black 0%, black 20%, transparent 100%)',
           WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, black 20%, transparent 100%)'
-        }}></div>
+          }}></div>
         
-        <div className="container mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
+        <div className="container mx-auto max-w-2xl px-3 sm:px-4 lg:px-6 relative z-10 py-12 sm:py-16">
           {isValid === null ? (
             // État de chargement
             <div className="bg-gray-950/50 border border-white/10 rounded-2xl p-8 sm:p-12 text-center">
@@ -245,28 +245,28 @@ function ResetPasswordContent() {
 
               {/* Message de succès après modification */}
               {state?.success && (
-                <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                <div className="mb-6 p-4 bg-green-500/20 rounded-lg">
                   <p className="text-green-400 text-sm font-poppins">{state.message}</p>
                 </div>
               )}
 
               {/* Message d'erreur de session */}
               {sessionError && (
-                <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                <div className="mb-6 p-4 bg-red-500/20 rounded-lg">
                   <p className="text-red-400 text-sm font-poppins">{sessionError}</p>
                 </div>
               )}
 
               {/* Message d'erreur du formulaire */}
               {state?.error && (
-                <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                <div className="mb-6 p-4 bg-red-500/20 rounded-lg">
                   <p className="text-red-400 text-sm font-poppins">{state.error}</p>
                 </div>
               )}
 
               {/* Message de chargement de session */}
               {!sessionReady && !sessionError && !state?.success && (
-                <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
+                <div className="mb-6 p-4 bg-blue-500/20 rounded-lg">
                   <p className="text-blue-400 text-sm font-poppins flex items-center gap-2">
                     <svg 
                       className="w-4 h-4 animate-spin" 
@@ -299,7 +299,7 @@ function ResetPasswordContent() {
                       id="oldPassword"
                       name="oldPassword"
                       required
-                      className="w-full px-4 py-3 bg-gray-900/50 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-poppins"
+                      className="w-full px-4 py-3 bg-gray-900/50 rounded-md text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins"
                       placeholder="Entrez votre ancien mot de passe"
                     />
                   </div>
@@ -315,7 +315,7 @@ function ResetPasswordContent() {
                       name="newPassword"
                       required
                       minLength={6}
-                      className="w-full px-4 py-3 bg-gray-900/50 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-poppins"
+                      className="w-full px-4 py-3 bg-gray-900/50 rounded-md text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins"
                       placeholder="Entrez votre nouveau mot de passe"
                     />
                   </div>
@@ -331,7 +331,7 @@ function ResetPasswordContent() {
                       name="confirmPassword"
                       required
                       minLength={6}
-                      className="w-full px-4 py-3 bg-gray-900/50 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-poppins"
+                      className="w-full px-4 py-3 bg-gray-900/50 rounded-md text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins"
                       placeholder="Confirmez votre nouveau mot de passe"
                     />
                   </div>
@@ -410,18 +410,18 @@ function ResetPasswordContent() {
 
               {/* Boutons */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 border-2 border-white text-white rounded-full font-medium text-sm sm:text-base hover:bg-white/10 transition-colors cursor-pointer font-poppins w-full sm:w-auto"
-                >
-                  Retour à l&apos;accueil
-                </Link>
                 <button
                   onClick={() => window.location.reload()}
                   className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins w-full sm:w-auto"
                 >
                   Réessayer
                 </button>
+                <Link
+                  href="/"
+                  className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 border-2 border-white text-white rounded-full font-medium text-sm sm:text-base hover:bg-white/10 transition-colors cursor-pointer font-poppins w-full sm:w-auto"
+                >
+                  Retour à l&apos;accueil
+                </Link>
               </div>
             </div>
           )}
@@ -444,7 +444,7 @@ export default function ResetPasswordPage() {
             maskImage: 'radial-gradient(ellipse at center, black 0%, black 20%, transparent 100%)',
             WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, black 20%, transparent 100%)'
           }}></div>
-          <div className="container mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16">
+          <div className="container mx-auto max-w-2xl px-3 sm:px-4 lg:px-6 relative z-10 py-12 sm:py-16">
             <div className="bg-gray-950/50 border border-white/10 rounded-2xl p-8 sm:p-12 text-center">
               <div className="mb-6 flex justify-center">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 bg-blue-500/20 rounded-full flex items-center justify-center">
