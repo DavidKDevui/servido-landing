@@ -167,6 +167,25 @@ function ResetPasswordContent() {
     }
   }, [isValid]);
 
+  // Déconnecter l'utilisateur et nettoyer les tokens après modification réussie du mot de passe
+  useEffect(() => {
+    if (state?.success) {
+      const signOut = async () => {
+        try {
+          const supabase = createClient();
+          await supabase.auth.signOut();
+          // Nettoyer les tokens
+          setTokens({ accessToken: null, refreshToken: null });
+          setSessionReady(false);
+          console.log('[Reset Password] Session supprimée après modification du mot de passe');
+        } catch (error) {
+          console.error('[Reset Password] Erreur lors de la déconnexion:', error);
+        }
+      };
+      signOut();
+    }
+  }, [state?.success]);
+
   // Redirection automatique vers le deep link après 1 seconde si la validation est réussie
   // useEffect(() => {
   //   if (isValid && tokens.accessToken && tokens.refreshToken) {
@@ -289,21 +308,6 @@ function ResetPasswordContent() {
               {/* Formulaire de réinitialisation */}
               {!state?.success && !sessionError && (
                 <form action={formAction} className="space-y-4 text-left">
-                  {/* Ancien mot de passe */}
-                  <div>
-                    <label htmlFor="oldPassword" className="block text-sm font-medium text-gray-300 mb-2 font-poppins">
-                      Ancien mot de passe
-                    </label>
-                    <input
-                      type="password"
-                      id="oldPassword"
-                      name="oldPassword"
-                      required
-                      className="w-full px-4 py-3 bg-gray-900/50 rounded-md text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins"
-                      placeholder="Entrez votre ancien mot de passe"
-                    />
-                  </div>
-
                   {/* Nouveau mot de passe */}
                   <div>
                     <label htmlFor="newPassword" className="block text-sm font-medium text-gray-300 mb-2 font-poppins">
@@ -314,9 +318,9 @@ function ResetPasswordContent() {
                       id="newPassword"
                       name="newPassword"
                       required
-                      minLength={6}
+                      minLength={8}
                       className="w-full px-4 py-3 bg-gray-900/50 rounded-md text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins"
-                      placeholder="Entrez votre nouveau mot de passe"
+                      placeholder="Minimum 8 caractères, 1 majuscule, 1 caractère spécial"
                     />
                   </div>
 
@@ -330,7 +334,7 @@ function ResetPasswordContent() {
                       id="confirmPassword"
                       name="confirmPassword"
                       required
-                      minLength={6}
+                      minLength={8}
                       className="w-full px-4 py-3 bg-gray-900/50 rounded-md text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins"
                       placeholder="Confirmez votre nouveau mot de passe"
                     />
@@ -340,7 +344,7 @@ function ResetPasswordContent() {
                   <button
                     type="submit"
                     disabled={isPending || !sessionReady || !!sessionError}
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full mt-6 inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isPending ? (
                       <>
@@ -366,14 +370,13 @@ function ResetPasswordContent() {
                 </form>
               )}
 
-              {/* Bouton retour à l'accueil après succès */}
+              {/* Message après succès */}
               {state?.success && (
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins mt-4"
-                >
-                  Retour à l&apos;accueil
-                </Link>
+                <div className="mt-6">
+                  <p className="text-gray-300 text-sm font-poppins text-center">
+                    Vous pouvez dès maintenant retourner dans l&apos;application pour vous connecter avec votre nouveau mot de passe.
+                  </p>
+                </div>
               )}
             </div>
           ) : (

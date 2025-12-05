@@ -52,12 +52,11 @@ export async function resetPassword(
   prevState: ResetPasswordState,
   formData: FormData
 ): Promise<ResetPasswordState> {
-  const oldPassword = formData.get('oldPassword') as string;
   const newPassword = formData.get('newPassword') as string;
   const confirmPassword = formData.get('confirmPassword') as string;
 
   // Validation
-  if (!oldPassword || !newPassword || !confirmPassword) {
+  if (!newPassword || !confirmPassword) {
     return {
       error: 'Tous les champs sont requis',
     };
@@ -69,9 +68,25 @@ export async function resetPassword(
     };
   }
 
-  if (newPassword.length < 6) {
+  // Validation du mot de passe
+  if (newPassword.length < 8) {
     return {
-      error: 'Le nouveau mot de passe doit contenir au moins 6 caractères',
+      error: 'Le mot de passe doit contenir au moins 8 caractères',
+    };
+  }
+
+  // Vérifier au moins une majuscule
+  if (!/[A-Z]/.test(newPassword)) {
+    return {
+      error: 'Le mot de passe doit contenir au moins une majuscule (A-Z)',
+    };
+  }
+
+  // Vérifier au moins un caractère spécial
+  const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+  if (!specialChars.test(newPassword)) {
+    return {
+      error: 'Le mot de passe doit contenir au moins un caractère spécial (!@#$%^&*()_+-=[]{};\':"\\|,.<>/?])',
     };
   }
 
@@ -101,6 +116,9 @@ export async function resetPassword(
         error: translatedError,
       };
     }
+
+    // Déconnecter l'utilisateur après modification du mot de passe
+    await supabase.auth.signOut();
 
     revalidatePath('/auth/reset-password');
     return {
