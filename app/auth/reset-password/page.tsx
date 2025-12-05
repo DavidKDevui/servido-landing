@@ -18,6 +18,7 @@ function ResetPasswordContent() {
   // const [deepLinkPrefix, setDeepLinkPrefix] = useState<string>('servido://');
   const [hasValidated, setHasValidated] = useState<boolean>(false);
   const [sessionReady, setSessionReady] = useState<boolean>(false);
+  const [sessionError, setSessionError] = useState<string | null>(null);
   const [state, formAction, isPending] = useActionState<{
     error?: string;
     success?: boolean;
@@ -97,6 +98,18 @@ function ResetPasswordContent() {
         console.log('[Reset Password] Refresh token présent:', tokens.refreshToken ? `${tokens.refreshToken.substring(0, 20)}...` : 'null');
         
         try {
+          // Vérifier que les variables d'environnement sont définies
+          const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+          const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+          
+          if (!supabaseUrl || !supabaseAnonKey) {
+            const errorMsg = 'Configuration Supabase manquante. Vérifiez que NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY sont définies dans votre fichier .env.local';
+            console.error('[Reset Password]', errorMsg);
+            setSessionError(errorMsg);
+            setSessionReady(false);
+            return;
+          }
+
           const supabase = createClient();
           console.log('[Reset Password] Client Supabase créé, appel de setSession...');
           
@@ -106,7 +119,9 @@ function ResetPasswordContent() {
           });
 
           if (error) {
+            const errorMsg = error.message || 'Erreur lors de la création de la session';
             console.error('[Reset Password] Erreur lors de la création de session:', error);
+            setSessionError(errorMsg);
             setSessionReady(false);
           } else if (data.session) {
             console.log('[Reset Password] Session créée avec succès:', {
@@ -114,16 +129,22 @@ function ResetPasswordContent() {
               email: data.session.user?.email,
               expiresAt: data.session.expires_at,
             });
+            setSessionError(null); // Réinitialiser l'erreur en cas de succès
             // Attendre un peu pour que les cookies soient bien synchronisés
             setTimeout(() => {
               console.log('[Reset Password] Session prête, cookies synchronisés');
               setSessionReady(true);
             }, 500);
           } else {
+            const errorMsg = 'Aucune session retournée après la création';
             console.warn('[Reset Password] setSession réussi mais aucune session retournée');
+            setSessionError(errorMsg);
+            setSessionReady(false);
           }
         } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : 'Erreur inconnue lors de la création de la session';
           console.error('[Reset Password] Erreur lors de la création de session (catch):', error);
+          setSessionError(errorMsg);
           setSessionReady(false);
         }
       };
@@ -229,7 +250,14 @@ function ResetPasswordContent() {
                 </div>
               )}
 
-              {/* Message d'erreur */}
+              {/* Message d'erreur de session */}
+              {sessionError && (
+                <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                  <p className="text-red-400 text-sm font-poppins">{sessionError}</p>
+                </div>
+              )}
+
+              {/* Message d'erreur du formulaire */}
               {state?.error && (
                 <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
                   <p className="text-red-400 text-sm font-poppins">{state.error}</p>
@@ -237,7 +265,7 @@ function ResetPasswordContent() {
               )}
 
               {/* Message de chargement de session */}
-              {!sessionReady && !state?.success && (
+              {!sessionReady && !sessionError && !state?.success && (
                 <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
                   <p className="text-blue-400 text-sm font-poppins flex items-center gap-2">
                     <svg 
@@ -311,7 +339,7 @@ function ResetPasswordContent() {
                   {/* Bouton de soumission */}
                   <button
                     type="submit"
-                    disabled={isPending || !sessionReady}
+                    disabled={isPending || !sessionReady || !!sessionError}
                     className="w-full inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isPending ? (
