@@ -92,24 +92,38 @@ function ResetPasswordContent() {
   useEffect(() => {
     if (isValid && tokens.accessToken && tokens.refreshToken) {
       const createSession = async () => {
+        console.log('[Reset Password] Tentative de création de session...');
+        console.log('[Reset Password] Access token présent:', tokens.accessToken ? `${tokens.accessToken.substring(0, 20)}...` : 'null');
+        console.log('[Reset Password] Refresh token présent:', tokens.refreshToken ? `${tokens.refreshToken.substring(0, 20)}...` : 'null');
+        
         try {
           const supabase = createClient();
+          console.log('[Reset Password] Client Supabase créé, appel de setSession...');
+          
           const { data, error } = await supabase.auth.setSession({
             access_token: tokens.accessToken!,
             refresh_token: tokens.refreshToken!,
           });
 
           if (error) {
-            console.error('Error setting session:', error);
+            console.error('[Reset Password] Erreur lors de la création de session:', error);
             setSessionReady(false);
           } else if (data.session) {
+            console.log('[Reset Password] Session créée avec succès:', {
+              userId: data.session.user?.id,
+              email: data.session.user?.email,
+              expiresAt: data.session.expires_at,
+            });
             // Attendre un peu pour que les cookies soient bien synchronisés
             setTimeout(() => {
+              console.log('[Reset Password] Session prête, cookies synchronisés');
               setSessionReady(true);
             }, 500);
+          } else {
+            console.warn('[Reset Password] setSession réussi mais aucune session retournée');
           }
         } catch (error) {
-          console.error('Error creating session:', error);
+          console.error('[Reset Password] Erreur lors de la création de session (catch):', error);
           setSessionReady(false);
         }
       };
