@@ -287,7 +287,7 @@ function ResetPasswordContent() {
               )}
 
               {/* Formulaire de réinitialisation */}
-              {!state?.success && (
+              {!state?.success && !sessionError && (
                 <form action={formAction} className="space-y-4 text-left">
                   {/* Ancien mot de passe */}
                   <div>
