@@ -6,7 +6,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import Link from 'next/link';
 
-function ConfirmMailContent() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [tokens, setTokens] = useState<{ accessToken: string | null; refreshToken: string | null }>({
@@ -20,7 +20,7 @@ function ConfirmMailContent() {
     const checkValidity = () => {
       const hash = window.location.hash;
       
-      // Parser le hash (format: #access_token=...&refresh_token=...&type=signup)
+      // Parser le hash (format: #access_token=...&refresh_token=...&type=recovery)
       const hashWithoutSharp = hash.substring(1);
       const hashParams = new URLSearchParams(hashWithoutSharp);
       
@@ -40,8 +40,9 @@ function ConfirmMailContent() {
       // Chercher type dans le hash
       const typeFromHash = hashParams.get('type');
       
-      // Vérifier si type=signup est présent (dans query params OU dans le hash)
-      const hasSignupType = typeFromQuery === 'signup' || typeFromHash === 'signup';
+      // Vérifier si type=recovery est présent (dans query params OU dans le hash)
+      // Le type=recovery est obligatoire
+      const hasRecoveryType = typeFromQuery === 'recovery' || typeFromHash === 'recovery';
       
       // Chercher env dans les query params ou dans le hash
       const envFromQuery = searchParams.get('env');
@@ -58,8 +59,8 @@ function ConfirmMailContent() {
         refreshToken,
       });
       
-      // La validation est réussie si on a type=signup ET access_token ET refresh_token dans le hash
-      return hasSignupType && hasAccessToken && hasRefreshToken;
+      // La validation est réussie si on a type=recovery ET access_token ET refresh_token dans le hash
+      return hasAccessToken && hasRefreshToken && hasRecoveryType;
     };
 
     // Utiliser setTimeout pour éviter l'avertissement du linter
@@ -76,7 +77,7 @@ function ConfirmMailContent() {
   useEffect(() => {
     if (isValid && tokens.accessToken && tokens.refreshToken) {
       const timer = setTimeout(() => {
-        const deepLink = `${deepLinkPrefix}auth/confirm-mail?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=signup`;
+        const deepLink = `${deepLinkPrefix}auth/reset-password?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=recovery`;
         window.location.href = deepLink;
       }, 1000); // 1 seconde
 
@@ -145,12 +146,12 @@ function ConfirmMailContent() {
 
               {/* Titre */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4 font-poppins">
-                Email confirmé avec succès
+                Lien de réinitialisation valide
               </h1>
 
               {/* Message */}
               <p className="text-gray-300 text-base sm:text-lg mb-8 font-poppins leading-relaxed">
-                Votre adresse email a été confirmée. Vous pouvez maintenant retourner dans l&apos;application et profiter de tous les services Servido.
+                Vous allez être redirigé vers l&apos;application pour réinitialiser votre mot de passe. Vous pouvez également cliquer sur le bouton ci-dessous.
               </p>
 
               {/* Bouton pour retourner à l'app */}
@@ -158,7 +159,7 @@ function ConfirmMailContent() {
                 onClick={() => {
                   if (tokens.accessToken && tokens.refreshToken) {
                     // Construire l'URL du deep link avec les tokens et le type
-                    const deepLink = `${deepLinkPrefix}auth/confirm-mail?access_token=${encodeURIComponent(tokens.accessToken)}&refresh_token=${encodeURIComponent(tokens.refreshToken)}&type=signup`;
+                    const deepLink = `${deepLinkPrefix}auth/reset-password?access_token=${encodeURIComponent(tokens.accessToken)}&refresh_token=${encodeURIComponent(tokens.refreshToken)}&type=recovery`;
                     window.location.href = deepLink;
                   } else {
                     // Fallback vers la page d'accueil si les tokens ne sont pas disponibles
@@ -167,7 +168,7 @@ function ConfirmMailContent() {
                 }}
                 className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins"
               >
-                Retourner dans l&apos;application
+                Réinitialiser mon mot de passe
                 <svg 
                   className="w-5 h-5" 
                   fill="none" 
@@ -207,12 +208,12 @@ function ConfirmMailContent() {
 
               {/* Titre */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4 font-poppins">
-                Erreur de confirmation
+                Lien invalide ou expiré
               </h1>
 
               {/* Message */}
               <p className="text-gray-300 text-base sm:text-lg mb-8 font-poppins leading-relaxed">
-                Le lien de confirmation est invalide ou a expiré. Veuillez vérifier votre email ou demander un nouveau lien de confirmation.
+                Le lien de réinitialisation de mot de passe est invalide ou a expiré. Veuillez vérifier votre email ou demander un nouveau lien de réinitialisation.
               </p>
 
               {/* Boutons */}
@@ -239,7 +240,7 @@ function ConfirmMailContent() {
   );
 }
 
-export default function ConfirmMailPage() {
+export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
       <>
@@ -279,7 +280,7 @@ export default function ConfirmMailPage() {
         <Footer />
       </>
     }>
-      <ConfirmMailContent />
+      <ResetPasswordContent />
     </Suspense>
   );
 }
