@@ -62,6 +62,18 @@ function ConfirmMailContent() {
     return () => clearTimeout(timer);
   }, [searchParams]);
 
+  // Redirection automatique vers le deep link après 1 seconde si la validation est réussie
+  useEffect(() => {
+    if (isValid && tokens.accessToken && tokens.refreshToken) {
+      const timer = setTimeout(() => {
+        const deepLink = `servido://auth/confirm-mail?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=signup`;
+        window.location.href = deepLink;
+      }, 1000); // 1 seconde
+
+      return () => clearTimeout(timer);
+    }
+  }, [isValid, tokens.accessToken, tokens.refreshToken]);
+
   return (
     <>
       <Navbar />
