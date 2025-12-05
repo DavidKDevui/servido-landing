@@ -6,6 +6,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import Link from 'next/link';
 import { resetPassword } from '@/app/actions/reset-password';
+import { createClient } from '@/lib/supabase/client';
 
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
@@ -85,6 +86,29 @@ function ResetPasswordContent() {
 
     return () => clearTimeout(timer);
   }, [searchParams, hasValidated]);
+
+  // Créer la session Supabase avec les tokens si la validation est réussie
+  useEffect(() => {
+    if (isValid && tokens.accessToken && tokens.refreshToken) {
+      const createSession = async () => {
+        try {
+          const supabase = createClient();
+          const { error } = await supabase.auth.setSession({
+            access_token: tokens.accessToken!,
+            refresh_token: tokens.refreshToken!,
+          });
+
+          if (error) {
+            console.error('Error setting session:', error);
+          }
+        } catch (error) {
+          console.error('Error creating session:', error);
+        }
+      };
+
+      createSession();
+    }
+  }, [isValid, tokens.accessToken, tokens.refreshToken]);
 
   // Nettoyer l'URL après validation (dans un useEffect séparé pour éviter les conflits)
   useEffect(() => {
