@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import Link from 'next/link';
+import { resetPassword } from '@/app/actions/reset-password';
 
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
@@ -15,6 +16,11 @@ function ResetPasswordContent() {
   });
   // const [deepLinkPrefix, setDeepLinkPrefix] = useState<string>('servido://');
   const [hasValidated, setHasValidated] = useState<boolean>(false);
+  const [state, formAction, isPending] = useActionState<{
+    error?: string;
+    success?: boolean;
+    message?: string;
+  } | null, FormData>(resetPassword, null);
 
   useEffect(() => {
     // Ne pas re-valider si on a déjà validé une fois
@@ -167,43 +173,112 @@ function ResetPasswordContent() {
 
               {/* Titre */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4 font-poppins">
-                Lien de réinitialisation valide
+                {state?.success ? 'Mot de passe modifié' : 'Réinitialiser votre mot de passe'}
               </h1>
 
-              {/* Message */}
-              <p className="text-gray-300 text-base sm:text-lg mb-8 font-poppins leading-relaxed">
-                Le lien de réinitialisation de mot de passe est valide. Vous pouvez maintenant réinitialiser votre mot de passe.
-              </p>
+              {/* Message de succès après modification */}
+              {state?.success && (
+                <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                  <p className="text-green-400 text-sm font-poppins">{state.message}</p>
+                </div>
+              )}
 
-              {/* Bouton pour retourner à l'app */}
-              {/* <button
-                onClick={() => {
-                  if (tokens.accessToken && tokens.refreshToken) {
-                    // Construire l'URL du deep link avec les tokens et le type
-                    const deepLink = `${deepLinkPrefix}auth/reset-password?access_token=${encodeURIComponent(tokens.accessToken)}&refresh_token=${encodeURIComponent(tokens.refreshToken)}&type=recovery`;
-                    window.location.href = deepLink;
-                  } else {
-                    // Fallback vers la page d'accueil si les tokens ne sont pas disponibles
-                    window.location.href = '/';
-                  }
-                }}
-                className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins"
-              >
-                Réinitialiser mon mot de passe
-                <svg 
-                  className="w-5 h-5" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+              {/* Message d'erreur */}
+              {state?.error && (
+                <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                  <p className="text-red-400 text-sm font-poppins">{state.error}</p>
+                </div>
+              )}
+
+              {/* Formulaire de réinitialisation */}
+              {!state?.success && (
+                <form action={formAction} className="space-y-4 text-left">
+                  {/* Ancien mot de passe */}
+                  <div>
+                    <label htmlFor="oldPassword" className="block text-sm font-medium text-gray-300 mb-2 font-poppins">
+                      Ancien mot de passe
+                    </label>
+                    <input
+                      type="password"
+                      id="oldPassword"
+                      name="oldPassword"
+                      required
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-poppins"
+                      placeholder="Entrez votre ancien mot de passe"
+                    />
+                  </div>
+
+                  {/* Nouveau mot de passe */}
+                  <div>
+                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-300 mb-2 font-poppins">
+                      Nouveau mot de passe
+                    </label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      name="newPassword"
+                      required
+                      minLength={6}
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-poppins"
+                      placeholder="Entrez votre nouveau mot de passe"
+                    />
+                  </div>
+
+                  {/* Confirmation du nouveau mot de passe */}
+                  <div>
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2 font-poppins">
+                      Confirmer le nouveau mot de passe
+                    </label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      required
+                      minLength={6}
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-poppins"
+                      placeholder="Confirmez votre nouveau mot de passe"
+                    />
+                  </div>
+
+                  {/* Bouton de soumission */}
+                  <button
+                    type="submit"
+                    disabled={isPending}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isPending ? (
+                      <>
+                        <svg 
+                          className="w-5 h-5 animate-spin" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+                          />
+                        </svg>
+                        Modification en cours...
+                      </>
+                    ) : (
+                      'Modifier le mot de passe'
+                    )}
+                  </button>
+                </form>
+              )}
+
+              {/* Bouton retour à l'accueil après succès */}
+              {state?.success && (
+                <Link
+                  href="/"
+                  className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins mt-4"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M13 7l5 5m0 0l-5 5m5-5H6" 
-                  />
-                </svg>
-              </button> */}
+                  Retour à l&apos;accueil
+                </Link>
+              )}
             </div>
           ) : (
             // Message d'erreur
