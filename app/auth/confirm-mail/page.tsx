@@ -78,7 +78,7 @@ function ConfirmMailContent() {
       const timer = setTimeout(() => {
         const deepLink = `${deepLinkPrefix}auth/confirm-mail?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=signup`;
         window.location.href = deepLink;
-      }, 1000); // 1 seconde
+      }, 250); // 1 seconde
 
       return () => clearTimeout(timer);
     }

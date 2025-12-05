@@ -79,7 +79,7 @@ function ResetPasswordContent() {
       const timer = setTimeout(() => {
         const deepLink = `${deepLinkPrefix}auth/reset-password?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=recovery`;
         window.location.href = deepLink;
-      }, 1000); // 1 seconde
+      }, 250); // 1 seconde
 
       return () => clearTimeout(timer);
     }
