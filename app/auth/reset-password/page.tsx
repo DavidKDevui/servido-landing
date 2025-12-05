@@ -17,6 +17,7 @@ function ResetPasswordContent() {
   });
   // const [deepLinkPrefix, setDeepLinkPrefix] = useState<string>('servido://');
   const [hasValidated, setHasValidated] = useState<boolean>(false);
+  const [sessionReady, setSessionReady] = useState<boolean>(false);
   const [state, formAction, isPending] = useActionState<{
     error?: string;
     success?: boolean;
@@ -93,16 +94,23 @@ function ResetPasswordContent() {
       const createSession = async () => {
         try {
           const supabase = createClient();
-          const { error } = await supabase.auth.setSession({
+          const { data, error } = await supabase.auth.setSession({
             access_token: tokens.accessToken!,
             refresh_token: tokens.refreshToken!,
           });
 
           if (error) {
             console.error('Error setting session:', error);
+            setSessionReady(false);
+          } else if (data.session) {
+            // Attendre un peu pour que les cookies soient bien synchronisés
+            setTimeout(() => {
+              setSessionReady(true);
+            }, 500);
           }
         } catch (error) {
           console.error('Error creating session:', error);
+          setSessionReady(false);
         }
       };
 
@@ -214,6 +222,28 @@ function ResetPasswordContent() {
                 </div>
               )}
 
+              {/* Message de chargement de session */}
+              {!sessionReady && !state?.success && (
+                <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
+                  <p className="text-blue-400 text-sm font-poppins flex items-center gap-2">
+                    <svg 
+                      className="w-4 h-4 animate-spin" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+                      />
+                    </svg>
+                    Connexion en cours...
+                  </p>
+                </div>
+              )}
+
               {/* Formulaire de réinitialisation */}
               {!state?.success && (
                 <form action={formAction} className="space-y-4 text-left">
@@ -267,7 +297,7 @@ function ResetPasswordContent() {
                   {/* Bouton de soumission */}
                   <button
                     type="submit"
-                    disabled={isPending}
+                    disabled={isPending || !sessionReady}
                     className="w-full inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-b from-white to-gray-100 text-black rounded-full font-medium text-sm sm:text-base hover:from-gray-50 hover:to-gray-200 transition-colors cursor-pointer font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isPending ? (
