@@ -50,7 +50,7 @@ function ResetPasswordContent() {
       const env = envFromQuery || envFromHash || 'prod';
       
       // Déterminer le préfixe du deep link selon l'environnement
-      const prefix = env === 'prod' ? 'servido://' : 'exp://';
+      const prefix = env === 'prod' ? 'servido://' : 'exp://localhost:8081/';
       setDeepLinkPrefix(prefix);
       
       // Stocker les tokens
