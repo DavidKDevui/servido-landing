@@ -13,9 +13,15 @@ function ResetPasswordContent() {
     accessToken: null,
     refreshToken: null,
   });
-  const [deepLinkPrefix, setDeepLinkPrefix] = useState<string>('servido://');
+  // const [deepLinkPrefix, setDeepLinkPrefix] = useState<string>('servido://');
+  const [hasValidated, setHasValidated] = useState<boolean>(false);
 
   useEffect(() => {
+    // Ne pas re-valider si on a déjà validé une fois
+    if (hasValidated) {
+      return;
+    }
+
     // Vérifier les paramètres de l'URL
     const checkValidity = () => {
       const hash = window.location.hash;
@@ -45,13 +51,13 @@ function ResetPasswordContent() {
       const hasRecoveryType = typeFromQuery === 'recovery' || typeFromHash === 'recovery';
       
       // Chercher env dans les query params ou dans le hash
-      const envFromQuery = searchParams.get('env');
-      const envFromHash = hashParams.get('env');
-      const env = envFromQuery || envFromHash || 'prod';
+      // const envFromQuery = searchParams.get('env');
+      // const envFromHash = hashParams.get('env');
+      // const env = envFromQuery || envFromHash || 'prod';
       
       // Déterminer le préfixe du deep link selon l'environnement
-      const prefix = env === 'prod' ? 'servido://' : 'exp://192.168.0.28:8081/';
-      setDeepLinkPrefix(prefix);
+      // const prefix = env === 'prod' ? 'servido://' : 'exp://192.168.0.28:8081/';
+      // setDeepLinkPrefix(prefix);
       
       // Stocker les tokens
       setTokens({
@@ -68,22 +74,37 @@ function ResetPasswordContent() {
     const timer = setTimeout(() => {
       const result = checkValidity();
       setIsValid(result);
+      setHasValidated(true);
     }, 0);
 
     return () => clearTimeout(timer);
-  }, [searchParams]);
+  }, [searchParams, hasValidated]);
 
-  // Redirection automatique vers le deep link après 1 seconde si la validation est réussie
+  // Nettoyer l'URL après validation (dans un useEffect séparé pour éviter les conflits)
   useEffect(() => {
-    if (isValid && tokens.accessToken && tokens.refreshToken) {
+    if (isValid !== null) {
+      // Attendre un peu pour que le state soit bien mis à jour
       const timer = setTimeout(() => {
-        const deepLink = `${deepLinkPrefix}auth/reset-password?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=recovery`;
-        window.location.href = deepLink;
-      }, 250); // 1 seconde
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, '', window.location.pathname);
+        }
+      }, 100);
 
       return () => clearTimeout(timer);
     }
-  }, [isValid, tokens.accessToken, tokens.refreshToken, deepLinkPrefix]);
+  }, [isValid]);
+
+  // Redirection automatique vers le deep link après 1 seconde si la validation est réussie
+  // useEffect(() => {
+  //   if (isValid && tokens.accessToken && tokens.refreshToken) {
+  //     const timer = setTimeout(() => {
+  //       const deepLink = `${deepLinkPrefix}auth/reset-password?access_token=${encodeURIComponent(tokens.accessToken!)}&refresh_token=${encodeURIComponent(tokens.refreshToken!)}&type=recovery`;
+  //       window.location.href = deepLink;
+  //     }, 250); // 1 seconde
+
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isValid, tokens.accessToken, tokens.refreshToken, deepLinkPrefix]);
 
   return (
     <>
@@ -151,11 +172,11 @@ function ResetPasswordContent() {
 
               {/* Message */}
               <p className="text-gray-300 text-base sm:text-lg mb-8 font-poppins leading-relaxed">
-                Vous allez être redirigé vers l&apos;application pour réinitialiser votre mot de passe. Vous pouvez également cliquer sur le bouton ci-dessous.
+                Le lien de réinitialisation de mot de passe est valide. Vous pouvez maintenant réinitialiser votre mot de passe.
               </p>
 
               {/* Bouton pour retourner à l'app */}
-              <button
+              {/* <button
                 onClick={() => {
                   if (tokens.accessToken && tokens.refreshToken) {
                     // Construire l'URL du deep link avec les tokens et le type
@@ -182,7 +203,7 @@ function ResetPasswordContent() {
                     d="M13 7l5 5m0 0l-5 5m5-5H6" 
                   />
                 </svg>
-              </button>
+              </button> */}
             </div>
           ) : (
             // Message d'erreur
