@@ -133,18 +133,18 @@ function ResetPasswordContent() {
   }, [isValid, tokens.accessToken, tokens.refreshToken]);
 
   // Nettoyer l'URL après validation (dans un useEffect séparé pour éviter les conflits)
-  useEffect(() => {
-    if (isValid !== null) {
-      // Attendre un peu pour que le state soit bien mis à jour
-      const timer = setTimeout(() => {
-        if (window.history && window.history.replaceState) {
-          window.history.replaceState({}, '', window.location.pathname);
-        }
-      }, 100);
+  // useEffect(() => {
+  //   if (isValid !== null) {
+  //     // Attendre un peu pour que le state soit bien mis à jour
+  //     const timer = setTimeout(() => {
+  //       if (window.history && window.history.replaceState) {
+  //         window.history.replaceState({}, '', window.location.pathname);
+  //       }
+  //     }, 100);
 
-      return () => clearTimeout(timer);
-    }
-  }, [isValid]);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isValid]);
 
   // Redirection automatique vers le deep link après 1 seconde si la validation est réussie
   // useEffect(() => {
