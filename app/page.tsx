@@ -9,7 +9,7 @@ import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 
 const baseMetadata = generateSEOMetadata({
-  title: "Des missions courtes, des connexions rapides",
+  title: "Des extras courts, des connexions rapides",
   description: "Bienvenue sur Servido, ta plateforme de services moderne et innovante. Découvre nos solutions adaptées à tes besoins.",
   keywords: ["servido", "services", "plateforme", "accueil", "solutions"],
   url: "/",
@@ -17,14 +17,14 @@ const baseMetadata = generateSEOMetadata({
 
 export const metadata: Metadata = {
   ...baseMetadata,
-  title: "Servido | Des missions courtes, des connexions rapides",
+  title: "Servido | Des extras courts, des connexions rapides",
   openGraph: {
     ...baseMetadata.openGraph,
-    title: "Servido | Des missions courtes, des connexions rapides",
+    title: "Servido | Des extras courts, des connexions rapides",
   },
   twitter: {
     ...baseMetadata.twitter,
-    title: "Servido | Des missions courtes, des connexions rapides",
+    title: "Servido | Des extras courts, des connexions rapides",
   },
 };
 
@@ -33,7 +33,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: "Servido",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/logo.png`,
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/img/store-logo.png`,
   description: "Plateforme de services moderne et innovante",
 };
 

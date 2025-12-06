@@ -14,8 +14,8 @@ export function Hero() {
             {/* Colonne gauche - Texte */}
             <div className="text-left sm:text-center lg:text-left lg:max-w-3xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6 leading-tight sm:leading-none tracking-[-1.5px] sm:tracking-[-2.9px] font-poppins">
-                Des missions <span className="relative inline-block">
-                  <span className="relative z-10">courtes</span>
+                Des extras <span className="relative inline-block">
+                  <span className="relative z-10">courts</span>
                   <span className="absolute bottom-0 left-0 right-0 h-2 bg-white rounded-full opacity-60" style={{ transform: 'translateY(2px)' }}></span>
                 </span>,
                 <br />
@@ -56,7 +56,7 @@ export function Hero() {
             <div className="relative z-10">
               <div className="relative">
                 <div className="absolute inset-0 flex justify-center items-center -z-10">
-                  <div className="w-full max-w-4xl h-[300px] sm:h-[400px] lg:h-[450px] rounded-full blur-3xl opacity-60 translate-x-0" style={{ background: 'radial-gradient(circle, #2563eb 0%, rgba(37, 99, 235, 0.4) 50%, transparent 70%)' }}></div>
+                  <div className="w-full max-w-6xl h-[400px] sm:h-[500px] lg:h-[600px] rounded-full blur-3xl opacity-60 translate-x-0" style={{ background: 'radial-gradient(circle, #2563eb 0%, rgba(37, 99, 235, 0.4) 50%, transparent 70%)' }}></div>
                 </div>
                 
                 {/* Icônes flottantes */}
@@ -86,14 +86,14 @@ export function Hero() {
                 </div> */}
                 
                 <Image
-                  src="/mockup.avif"
+                  src="/IMG_0730-portrait.png"
                   alt="Mockup de l'application mobile"
                   width={350}
-                  height={260}
-                  className="w-full max-w-[280px] sm:max-w-sm h-auto mx-auto"
+                  height={230}
+                  className="w-full max-w-[220px] sm:max-w-[280px] h-auto mx-auto"
                   style={{
-                    maskImage: 'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)'
+                    // maskImage: 'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
+                    // WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)'
                   }}
                   priority
                 />

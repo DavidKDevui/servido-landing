@@ -4,35 +4,36 @@ import Image from "next/image";
 
 const carouselImages = [
   { 
-    src: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=700&fit=crop&q=80", 
-    alt: "Interface Servido - Trouve et accepte des missions rapides à proximité de chez toi",
-    title: "Missions rapides"
-  },
-  { 
-    src: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=400&h=700&fit=crop&q=80", 
+    src: "/carousel/IMG_0725.png", 
     alt: "Profil utilisateur Servido - Gère ton profil de freelance ou de commerce",
-    title: "Profil complet"
+    title: "Consultez et gérez vos missions"
   },
   { 
-    src: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=700&fit=crop&q=80", 
+    src: "/carousel/IMG_0726.png", 
     alt: "Carte interactive Servido - Visualise les missions disponibles sur une carte",
-    title: "Carte interactive"
+    title: "Planifiez vos disponibilités hebdo"
   },
   { 
-    src: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=400&h=700&fit=crop&q=80", 
+    src: "/carousel/IMG_0730.png", 
+    alt: "Fonctionnalités Servido - Découvre toutes les fonctionnalités de la plateforme",
+    title: "Renseignez vous sur les commerces"
+  },
+  { 
+    src: "/carousel/IMG_0727.png", 
     alt: "Messagerie Servido - Communique directement avec les commerces et freelances",
-    title: "Messages directs"
+    title: "Communiquez avec les commerces"
   },
   { 
-    src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=700&fit=crop&q=80", 
+    src: "/carousel/IMG_0728.png", 
     alt: "Notifications Servido - Reste informé des nouvelles missions et messages",
-    title: "Notifications"
+    title: "Gardez un oeil sur votre visibilité"
   },
   { 
-    src: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=700&fit=crop&q=80", 
+    src: "/carousel/IMG_0729.png", 
     alt: "Historique Servido - Consulte l'historique de tes missions et paiements",
-    title: "Historique"
+    title: "Explorez les commerces aux alentours"
   },
+
 ];
 
 export function Features() {
@@ -75,7 +76,7 @@ export function Features() {
               {[...carouselImages, ...carouselImages].map((image, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-[200px] sm:w-[240px] border border-white/10 rounded-2xl p-2 flex flex-col bg-white/6"
+                  className="flex-shrink-0 w-[200px] sm:w-[240px] border border-white/5 rounded-2xl p-2 flex flex-col bg-white/6"
                   style={{ aspectRatio: "9/16" }}
                 >
                   {/* Image - 85% de la hauteur */}
@@ -94,8 +95,8 @@ export function Features() {
                     />
                   </div>
                   {/* Texte - 15% de la hauteur */}
-                  <div className="flex-1 flex items-center pt-2">
-                    <p className="text-white text-lg sm:text-xl font-poppins font-semibold text-left w-full tracking-tight">
+                  <div className="flex-1 flex items-center pt-4 pb-1">
+                    <p className="px-2 text-white text-sm sm:text-base font-poppins font-semibold text-left w-full tracking-tight">
                       {image.title}
                     </p>
                   </div>
