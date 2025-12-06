@@ -4,32 +4,32 @@ import Image from "next/image";
 
 const carouselImages = [
   { 
-    src: "/carousel/IMG_0725.png", 
+    src: "/carousel/IMG_0725.PNG", 
     alt: "Profil utilisateur Servido - Gère ton profil de freelance ou de commerce",
     title: "Consultez et gérez vos missions"
   },
   { 
-    src: "/carousel/IMG_0726.png", 
+    src: "/carousel/IMG_0726.PNG", 
     alt: "Carte interactive Servido - Visualise les missions disponibles sur une carte",
     title: "Planifiez vos disponibilités hebdo"
   },
   { 
-    src: "/carousel/IMG_0730.png", 
+    src: "/carousel/IMG_0730.PNG", 
     alt: "Fonctionnalités Servido - Découvre toutes les fonctionnalités de la plateforme",
     title: "Renseignez vous sur les commerces"
   },
   { 
-    src: "/carousel/IMG_0727.png", 
+    src: "/carousel/IMG_0727.PNG", 
     alt: "Messagerie Servido - Communique directement avec les commerces et freelances",
     title: "Communiquez avec les commerces"
   },
   { 
-    src: "/carousel/IMG_0728.png", 
+    src: "/carousel/IMG_0728.PNG", 
     alt: "Notifications Servido - Reste informé des nouvelles missions et messages",
     title: "Gardez un oeil sur votre visibilité"
   },
   { 
-    src: "/carousel/IMG_0729.png", 
+    src: "/carousel/IMG_0729.PNG", 
     alt: "Historique Servido - Consulte l'historique de tes missions et paiements",
     title: "Explorez les commerces aux alentours"
   },
